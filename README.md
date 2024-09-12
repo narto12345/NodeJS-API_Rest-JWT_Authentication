@@ -31,6 +31,146 @@ Es necesario tener instalado los siguientes programas en nuestro equipo:
 
 1. Abrir una terminal como CMD, PowerShell o similar.
 
-2. El sisguiente paso consiste en clonar el repositorio
+2. Ejecute los siguiente comandos para clonar el repositorio:
+
+```cmd
+mkdir nodejs_au
+
+cd nodejs_au
+
+git clone https://github.com/narto12345/NodeJS-API_Rest-JWT_Authenticationion.git
+```
 
 ### Importar base de datos MySQL
+
+Una vez halla clonado el repositorio, en el directorio raíz encontrará un archivo llamado **"node_api_au.sql"** que es una copia de seguridad de la base de datos que necesitamos para ejecutar esta aplicación.
+En este instructivo no se explicará tal proceso, sin embargo, en el siguiente enlace encontrará los pasos para importarlo, utilizando MySQL Workbench [Tutorial de documentación oficial de MySQL](https://dev.mysql.com/doc/workbench/en/wb-admin-export-import-management.html).
+
+### Levantar aplicativo
+
+1. Establecer las credenciales de la base de datos MySQL:
+
+Diríjase al fichero **\repositories\user-repository.js** en el cual encontrará el siguiente código en la parte inicial:
+
+```javascript
+import { Sequelize, DataTypes } from "sequelize";
+import bcrypt from "bcrypt";
+
+class UserRepository {
+  constructor() {
+    /*Remplazar los valores de root (solo si aplica) y "12345" por
+    las credenciales de su instancia de MySQL donde importó la base de datos
+    "node_api_au.sql"*/
+    this.connection = new Sequelize("node_api_au", "root", "12345", {
+      host: "localhost",
+      dialect: "mysql",
+    });
+```
+
+2. Instalar las depencias con **npm**
+
+Ejecute los siguiente comandos en su CLI, (asegurece de encontrase en el directorio raíz del proyecto)
+
+```cmd
+npm install
+```
+
+3. Iniciar aplicación:
+
+```cmd
+npm run dev
+```
+
+Una vez haya ejecuta el comando deberá ver el siguiente mensaje:
+
+![server started](/resources/start_server.png)
+
+Al ver este mensaje puede iniciar a probar cada uno de los endpoints del sercivio:
+
+### Endpoints
+
+1. **Registrarse**
+
+- URL: http://localhost:3000/register
+- Method: POST
+- Body (example):
+
+```json
+{
+  "username": "Pepito",
+  "password": "san"
+}
+```
+
+**Respuesta:**
+
+- Estado: 200
+
+```json
+{
+  "id": null,
+  "username": "Pepito",
+  "password": "$2b$10$Z3QKlEGVyIaweixrghKcIulgdiCPa/f.D81B85nxVw8NOaeVaOuAK"
+}
+```
+
+2. **Iniciar sesión**
+
+- URL: http://localhost:3000/login
+- Method: POST
+- Body (example):
+
+```json
+{
+  "username": "Pepito",
+  "password": "san"
+}
+```
+
+**Respuesta:**
+
+- Estado: 200
+
+```json
+{
+  "message": "Te has logeado :D"
+}
+```
+
+3. **Obtener recursos protegidos**
+
+- URL: http://localhost:3000/protected
+- Method: GET
+- Body: No aplica
+
+**Respuesta:**
+
+En este caso devuelve un arreglo de los usuarios en la base de datos:
+
+- Estado: 200
+
+```json
+[
+  {
+    "id": 1,
+    "username": "Pepito",
+    "password": "$2b$10$Z3QKlEGVyIaweixrghKcIulgdiCPa/f.D81B85nxVw8NOaeVaOuAK"
+  }
+]
+```
+
+4. **Cerrar sesión**
+
+- URL: http://localhost:3000/logout
+- Method: POST
+- Body: No aplica
+
+**Respuesta:**
+
+- Estado: 200
+
+```json
+{
+  "message": "Sesión cerrada"
+}
+```
