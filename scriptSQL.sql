@@ -1,0 +1,13 @@
+-- CREATE DATABASE node_api_au;
+
+USE node_api_au;
+
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user(
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(99) UNIQUE NOT NULL,
+    password VARCHAR(99) NOT NULL
+);
+
+SELECT * FROM user;

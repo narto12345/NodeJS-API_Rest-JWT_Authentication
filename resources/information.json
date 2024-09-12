@@ -1,0 +1,17 @@
+[
+    {
+        "company": "Microsoft",
+        "console": "Xbox",
+        "color": "green"
+    },
+    {
+        "company": "Sony",
+        "console": "Playstation",
+        "color": "bluee"
+    },
+    {
+        "company": "Nintendo",
+        "console": "Nintendo",
+        "color": "red"
+    }
+]
