@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  app:
+    container_name: "api-node-mysql-jwt"
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
+      - HOST=mysql-node-jwt
+      - PASSWORD=qwerty123
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: "mysql-node-jwt"
+    image: "mysql:8.0.39"
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=qwerty123
+      - MYSQL_DATABASE=node_api_au
+
+volumes:
+  mysql-data:

@@ -1,0 +1,9 @@
+# CREAR CONTENEDOR DE MYSQL:
+
+docker run -p3307:3306 --name mysql-node-jwt -e MYSQL_ROOT_PASSWORD=qwerty123 -e MYSQL_DATABASE=node_api_au -d --network=nico-network mysql:8.0.39
+
+docker build -t api-node-jwt:1 .
+
+docker run -p80:80 --name api-node-jwt-c1 -d --network=nico-network api-node-jwt:1
+
+docker network create nico-network
